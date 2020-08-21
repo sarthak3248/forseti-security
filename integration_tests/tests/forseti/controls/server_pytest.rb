@@ -29,15 +29,6 @@ control "server-pytest" do
     its('exit_status') { should eq 0 }
   end
 
-  # Copy fixture rules to Forseti server and reload server configuration
-  describe command("sudo gsutil cp -r gs://#{forseti_server_bucket}/rules $FORSETI_HOME/") do
-    its('exit_status') { should eq 0 }
-  end
-  describe command("forseti server configuration reload") do
-    its('exit_status') { should eq 0 }
-    its('stdout') { should match (/\"isSuccess\": true/) }
-  end
-
   describe command("sudo pytest -m server -v $FORSETI_HOME/endtoend_tests/ \
                         --ignore=$FORSETI_HOME/endtoend_tests/forseti/inventory \
                         --cloudsql_instance_name=#{cloudsql_instance_name} \
