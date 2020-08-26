@@ -34,6 +34,7 @@ control "server-pytest" do
         --cscc_source_id=#{cscc_source_id} \
         --forseti_server_vm_name=#{forseti_server_vm_name}") do
     its('exit_status') { should eq 0 }
+    its('stdout') { should match(/test_cscc_findings_have_severity PASSED/) }
     its('stdout') { should match(/test_cscc_findings_match_violations PASSED/) }
     its('stdout') { should match(/test_cv_cloudsql_location PASSED/) }
     its('stdout') { should match(/test_cv_compute_zone PASSED/) }
